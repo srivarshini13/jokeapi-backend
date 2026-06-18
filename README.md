@@ -1,59 +1,51 @@
-# Joke Management System Backend
+# Joke API Backend
 
-A backend-only Joke Management System built with Node.js, Express, MongoDB, JWT authentication, and CRUD operations.
+This is a backend-only project for managing jokes using Node.js, Express, MongoDB, and JWT authentication.
 
-## Features
+You can register users, log in, create jokes, edit them, delete them, and fetch jokes from the database. The frontend is not included, so the API is tested with tools like Thunder Client, Postman, or curl.
 
-- User registration and login
-- Password hashing with bcrypt
-- JWT authentication and protected routes
-- Full CRUD for jokes
-- MongoDB storage via Mongoose
-- Clean project structure and readable code
-
-## Setup
+## Quick setup
 
 1. Install dependencies:
    ```bash
    npm install
    ```
 
-2. Copy `.env.example` to `.env` and update values:
+2. Copy the example environment file:
    ```bash
    cp .env.example .env
    ```
 
-3. Start MongoDB locally (for example, `mongod` if installed).
+3. Update `.env` with your MongoDB connection and a secret value for `JWT_SECRET`.
 
-4. Run the server in development mode:
+4. Start the app:
    ```bash
    npm run dev
    ```
 
-5. Or run normally:
-   ```bash
-   npm start
-   ```
+## Main endpoints
 
-## API Endpoints
+### Authentication
 
-### Auth
-
-- `POST /api/auth/register` — register a new user
-- `POST /api/auth/login` — login and receive a JWT
-- `GET /api/auth/profile` — get current user profile (protected)
+- `POST /api/auth/register` — create a new user
+- `POST /api/auth/login` — log in and get a JWT token
+- `GET /api/auth/profile` — get the current user (requires token)
 
 ### Jokes
 
 - `GET /api/jokes` — list all jokes
-- `GET /api/jokes/:id` — get a joke by id
-- `POST /api/jokes` — create a joke (protected)
-- `POST /api/jokes/fetch-external` — fetch and store a joke from an external Joke API (protected, optional)
-- `PUT /api/jokes/:id` — update a joke (protected)
-- `DELETE /api/jokes/:id` — delete a joke (protected)
+- `GET /api/jokes/:id` — get one joke by ID
+- `POST /api/jokes` — add a joke (requires token)
+- `PUT /api/jokes/:id` — update a joke (requires token)
+- `DELETE /api/jokes/:id` — remove a joke (requires token)
 
 ## Notes
 
-- No frontend is required. You can test endpoints with Postman, Insomnia, or curl.
-- Keep API keys and secrets in `.env`; do not commit them.
-- Image upload is optional and not implemented here per requirements.
+- Use the `Authorization: Bearer <token>` header for protected routes.
+- Keep `.env` private and do not push it to GitHub.
+- A database name is already set to `jokeapi` in `.env.example`.
+
+## Testing
+
+Use Thunder Client or Postman to call the API routes.
+First register a user, then log in, copy the JWT token, and use it for protected joke requests.
